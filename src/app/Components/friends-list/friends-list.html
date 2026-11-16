@@ -1,0 +1,19 @@
+<section class="card">
+  <div class="icon">👥</div>
+  <div class="content">
+    <h2>Liste des amis</h2>
+
+    <div class="inputs">
+  @for (f of friends; track $index) {
+    <input type="text" [(ngModel)]="friends[$index]" />
+  }
+</div>
+
+<ul>
+  @for (f of friends; track $index) {
+    <li>{{ f }}</li>
+  }
+</ul>
+
+  </div>
+</section>
