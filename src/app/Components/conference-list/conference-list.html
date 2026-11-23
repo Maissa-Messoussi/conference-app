@@ -1,1 +1,47 @@
-<p>conference-list works!</p>
+<section class="section-card conf-section" style="--accent: #0f766e; --accent-soft: #e0f7f5">
+  <div class="section-body">
+    <div class="conf-header">
+      <div class="section-icon">📅</div>
+      <div>
+        <h2>Liste des conférences à venir</h2>
+        <p class="hint">Cliquez sur une conférence pour afficher ses détails.</p>
+      </div>
+    </div>
+
+    @if (conferences().length === 0) {
+      <p class="empty">Aucune conférence n'est enregistrée pour le moment.</p>
+    } @else {
+      <input class="search" type="text" placeholder="Taper le titre de la conférence" [(ngModel)]="searchTerm" />
+
+      <div class="grid">
+        @for (item of filtered(); track item.id) {
+          @if (item.date > today) {
+            <article class="conf-card" [class.selected]="selectedId() === item.id" (click)="select(item.id)">
+              <h3>{{ item.title | uppercase }}</h3>
+              <p><strong>Date :</strong> {{ item.date | date: 'dd/MM/yyyy' }}</p>
+              <p><strong>Lieu :</strong> {{ item.place }}</p>
+              <p><strong>Places restantes :</strong> {{ item.maxParticipants - item.nbParticipants }}</p>
+              <button
+                class="btn"
+                [ngClass]="{
+                  'btn-available': item.maxParticipants - item.nbParticipants >= 10,
+                  'btn-low': item.maxParticipants - item.nbParticipants > 0 && item.maxParticipants - item.nbParticipants < 10,
+                  'btn-full': item.maxParticipants - item.nbParticipants <= 0
+                }"
+                [disabled]="item.maxParticipants - item.nbParticipants <= 0"
+                (click)="register($event, item)"
+              >
+                S'inscrire
+              </button>
+            </article>
+          }
+        }
+      </div>
+
+      <app-confdetails
+        [conference]="selectedConference()"
+        (registered)="onChildRegistered($event)"
+      />
+    }
+  </div>
+</section>

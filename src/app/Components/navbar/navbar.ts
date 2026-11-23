@@ -7,7 +7,7 @@ import { Component, signal } from '@angular/core';
   styleUrl: './navbar.css',
 })
 export class Navbar {
-  links = signal(['Accueil', 'Conférences', 'À propos']);
+  links = signal(['Accueil','Profil', 'Conférences', 'Amis', 'Notifications', 'Admin']);
   activeLink = signal('Accueil');
 
   setActive(link: string): void {

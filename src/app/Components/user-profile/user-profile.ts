@@ -1,4 +1,9 @@
-import { Component } from '@angular/core';
+import { Component, signal } from '@angular/core';
+
+interface User {
+  name: string;
+  email: string;
+}
 
 @Component({
   selector: 'app-user-profile',
@@ -7,6 +12,8 @@ import { Component } from '@angular/core';
   styleUrl: './user-profile.css',
 })
 export class UserProfile {
-  name = 'Maissa';
-  email = 'Maissa@email.com';
+  user = signal({
+    name: 'Maissa',
+    email: 'Maissa@gmail.com',
+  });
 }
